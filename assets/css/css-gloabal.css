@@ -243,7 +243,7 @@ header
 }
 
 .header-area .main-nav {
-  min-height: 80px;
+  min-height: 100px;
   background: transparent;
 }
 
@@ -542,7 +542,7 @@ header
 }
 
 .header-area.header-sticky {
-  min-height: 80px;
+  min-height: 100px;
 }
 
 .header-area .nav {
