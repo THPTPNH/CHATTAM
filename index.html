@@ -157,7 +157,7 @@
               <div class="col-lg-12">
                 <fieldset>
                   <label for="subject">Tiêu Đề</label>
-                  <input type="text" name="subject" id="subject" placeholder="" autocomplete="on">
+                  <input type="text" name="subject" id="subject" placeholder="" autocomplete="on" required>
                 </fieldset>
               </div>
               <div class="col-lg-12">
@@ -371,32 +371,34 @@
   var swiper = new Swiper(".swiper-container", swiperOptions);
 </script>
 <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxd_YeINhND1Z2cS0PeZaYt0uo8sODwqCeVsfwj9ztyN1DayJV3qGUVYmeTfVyHoyqbgA/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbxlN6b318VATQxtf1mF5nBLnQVZx-DTA3pjPkhgQ_rUDOKxriNSpizQCs7nOzhM0KtO/exec";
   const form = document.getElementById('calculate');
+
   form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Ngăn hành động submit mặc định của form
+    e.preventDefault(); // Prevent default form submission
 
     const formData = new FormData(form);
 
     try {
-      // Gửi dữ liệu qua Google Apps Script
       const response = await fetch(scriptURL, {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-        alert('Thông tin đã được gửi thành công!');
-        form.reset(); // Xóa nội dung form sau khi gửi thành công
+        const result = await response.json();
+        alert(result.message); // Display success message
+        form.reset(); // Clear the form
       } else {
-        throw new Error('Có lỗi xảy ra khi gửi thông tin.');
+        alert("Có lỗi xảy ra khi gửi dữ liệu!");
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Có lỗi xảy ra khi gửi thông tin. Vui lòng thử lại!');
+      console.error("Error:", error);
+      alert("Không thể gửi dữ liệu. Kiểm tra kết nối mạng hoặc liên hệ quản trị viên.");
     }
   });
 </script>
+
 
 </body>
 
