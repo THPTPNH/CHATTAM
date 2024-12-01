@@ -140,7 +140,7 @@
             <h6>Thông Tin Của Bạn </h6>
             <h4>Hãy chia sẻ những tâm sự của bạn với tui</h4>
           </div>
-          <form id="calculate" action="" method="get">
+          <form id="calculate" >
             <div class="row">
               <div class="col-lg-6">
                 <fieldset>
@@ -371,31 +371,51 @@
   var swiper = new Swiper(".swiper-container", swiperOptions);
 </script>
 <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzvzhczFODU-AGgoUUIJV0FHcS8UEPSZqOl2n324Qv-pxTmxSqlqwj68HLNFyARqUq23w/exec";
+  // URL của Google Form "
+  const formUrl ='https://docs.google.com/forms/d/e/1FAIpQLSfOmiKxrKibcRNdBjnqCBb53SfRfz2s-HhSBWgtEAQZiKPASw/formResponse'
+  // Đặt các 'entry.xxxx' của bạn sau khi lấy từ Google Form
+  const entryName = 'entry.1281739600';    // Dành cho trường 'Họ và Tên'
+  const entryEmail = 'entry.258461606';   // Dành cho trường 'Email'
+  const entrySubject = 'entry.1875525262'; // Dành cho trường 'Tiêu Đề'
+  // const entryCategory = 'entry.45678901'; // Dành cho trường 'Lý Do'
+  // const entryMessage = 'entry.56789012'; // Dành cho trường 'Nội Dung'
+
   const form = document.getElementById('calculate');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevent default form submission
 
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Ngừng gửi form mặc định
+
+    // Lấy giá trị từ các trường trong form
     const formData = new FormData(form);
+    
+    // Tạo một đối tượng dữ liệu mới để gửi vào Google Form
+    const data = {
+      [entryName]: formData.get('name'),
+      [entryEmail]: formData.get('email'),
+      [entrySubject]: formData.get('subject'),
+      // [entryCategory]: formData.get('category'),
+      // [entryMessage]: formData.get('message'),
+    };
 
-    try {
-      const response = await fetch(scriptURL, {
-        method: 'POST',
-        body: formData,
-      });
+     // Tạo một đối tượng URLSearchParams để gửi request
+     const searchParams = new URLSearchParams(data);
 
-      if (response.ok) {
-        const result = await response.json();
-        alert(result.message); // Display success message
-        form.reset(); // Clear the form
-      } else {
-        alert("Có lỗi xảy ra khi gửi dữ liệu!");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Không thể gửi dữ liệu. Kiểm tra kết nối mạng hoặc liên hệ quản trị viên.");
-    }
-  });
+  // Gửi yêu cầu POST đến Google Form
+  fetch(formUrl, {
+    method: 'POST',
+    body: searchParams,  // Dữ liệu được gửi dưới dạng POST
+    mode: 'no-cors',
+  })
+  .then(response => {
+    // Không thể kiểm tra phản hồi trong 'no-cors', nhưng có thể giả định rằng yêu cầu đã thành công
+    alert('Thông tin đã được gửi thành công!');
+    form.reset();  // Reset form sau khi gửi thành công
+  })
+  .catch(error => {
+    alert('Có lỗi xảy ra khi gửi thông tin.');
+    console.error('Error:', error);
+  })
+  })
 </script>
 
 </body>
