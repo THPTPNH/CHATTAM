@@ -126,7 +126,7 @@
           </div>
         </div>
         <div class="col-lg-10 offset-lg-1">
-          <form id="contact" action="" method="post">
+          <form id="contact">
             <div class="row">
               <div class="col-lg-6">
                 <fieldset>
@@ -170,32 +170,32 @@
       <div class="row">
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+           
           </div>
         </div>
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+            
           </div>
         </div>
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+           
           </div>
         </div>
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+           
           </div>
         </div>
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+            
           </div>
         </div>
         <div class="col-lg-2 col-sm-4 col-6">
           <div class="item">
-            <img src="assets/images/client-01.png" alt="">
+           
           </div>
         </div>
       </div>
@@ -291,6 +291,56 @@
 
       var swiper = new Swiper(".swiper-container", swiperOptions);
     </script>
+<script>
+  // URL của Google Form "
+  //const formUrl ='https://docs.google.com/forms/d/e/1FAIpQLSfOmiKxrKibcRNdBjnqCBb53SfRfz2s-HhSBWgtEAQZiKPASw/formResponse'
+  const formUrl ='https://docs.google.com/forms/d/e/1FAIpQLSevqLpH71M5501xVb4_RreIklYn8auHmJ7DZ8f7CaJARcpdnA/formResponse'
 
+  // Đặt các 'entry.xxxx' lấy từ Google Form
+  const entryName = 'entry.641400077';    // Dành cho trường 'Họ và Tên'
+  const entryPhoneNumber = 'entry.577045532'; // Dành cho trường 'số điện thoại'
+  const entryEmail = 'entry.931548010';   // Dành cho trường 'Email'
+  const entrySubject = 'entry.1282707175'; // Dành cho trường 'Tiêu Đề'
+  
+  const entryMessage = 'entry.605544755'; // Dành cho trường 'Nội Dung'
+
+  const form = document.getElementById('contact');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Ngừng gửi form mặc định
+
+    // Lấy giá trị từ các trường trong form
+    const formData = new FormData(form);
+    
+    // Tạo một đối tượng dữ liệu mới để gửi vào Google Form
+    const data = {
+      [entryName]: formData.get('name'),
+      [entryPhoneNumber]: formData.get('phone'),
+      [entryEmail]: formData.get('email'),
+      [entrySubject]: formData.get('subject'),
+     
+      [entryMessage]: formData.get('message'),
+    };
+
+     // Tạo một đối tượng URLSearchParams để gửi request
+     const searchParams = new URLSearchParams(data);
+
+  // Gửi yêu cầu POST đến Google Form
+  fetch(formUrl, {
+    method: 'POST',
+    body: searchParams,  // Dữ liệu được gửi dưới dạng POST
+    mode: 'no-cors',
+  })
+  .then(response => {
+    // Không thể kiểm tra phản hồi trong 'no-cors', nhưng có thể giả định rằng yêu cầu đã thành công
+    alert('Thông tin đã được gửi thành công!');
+    form.reset();  // Reset form sau khi gửi thành công
+  })
+  .catch(error => {
+    alert('Có lỗi xảy ra khi gửi thông tin.');
+    console.error('Error:', error);
+  })
+  })
+</script>
   </body>
 </html>
